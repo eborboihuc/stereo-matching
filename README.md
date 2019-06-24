@@ -17,7 +17,7 @@
 
 ![](img/stereo_image.png)
 
-```python
+```bash
 python test.py img/rgb_2011_09_26_0001_02_0070.png img/rgb_2011_09_26_0001_03_0070.png
 ```
 
@@ -25,7 +25,7 @@ python test.py img/rgb_2011_09_26_0001_02_0070.png img/rgb_2011_09_26_0001_03_00
 
 ![](img/projected_disparity.png)
 
-```python
+```bash
 python test.py img/rgb_2011_09_26_0001_02_0070.png img/rgb_2011_09_26_0001_03_0070.png --show_disp_map
 ```
 
@@ -33,7 +33,7 @@ python test.py img/rgb_2011_09_26_0001_02_0070.png img/rgb_2011_09_26_0001_03_00
 
 ![](img/projected_depth.png)
 
-```python
+```bash
 python test.py img/rgb_2011_09_26_0001_02_0070.png img/rgb_2011_09_26_0001_03_0070.png --show_depth_map
 ```
 

@@ -142,14 +142,43 @@ class Reconstructor():
 
             if ch == 'h':  # reset
                 self._view(self.r, self.t)
+                r = self.r
+                t = self.t
+
+            if ch == 'p':  # print
+                print(r)
+                print(t)
 
             elif ch == '\x1b':  # esc
                 cv2.destroyAllWindows()
                 break
 
-    def _view(self, r, t):
-        cv2.imshow('projected', self._calc_projected_image(r, t))
+    def _view(self, r: np.ndarray, t: np.ndarray, show_param: bool = True):
+        img = self._calc_projected_image(r, t)
+        if show_param:
+            img = self._show_param(img, r, t)
+        cv2.imshow('projected', img)
 
+    def _show_param(self, img, r, t):
+        r_quat = R.from_matrix(r).as_quat()
+        text = f"R: {r_quat}\nT: {t}"
+        x, y0 = self.position
+        for i, line in enumerate(text.split("\n")):
+            y = y0 + i * self.line_height
+            cv2.rectangle(img,
+                          pt1=(x, y),
+                          pt2=(x + len(line) * self.line_width,
+                               y + self.line_height),
+                          color=(0, 0, 0))
+            cv2.putText(img,
+                        text=line,
+                        org=(x, y),
+                        fontFace=self.font_face,
+                        fontScale=self.font_scale,
+                        color=(255, 255, 255),
+                        thickness=self.thickness,
+                        lineType=cv2.LINE_AA)
+        return img
 
     @staticmethod
     def rotate(arr, angle):
@@ -166,7 +195,7 @@ class Reconstructor():
             [np.cos(anglez), -np.sin(anglez), 0],
             [np.sin(anglez), np.cos(anglez), 0],
             [0, 0, 1]
-        ]))).dot(arr)
+        ]))).dot(arr) # yapf: disable
 
 
     @staticmethod
